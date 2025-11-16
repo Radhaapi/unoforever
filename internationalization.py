@@ -19,6 +19,8 @@
 
 
 import gettext
+import os
+import logging
 from functools import wraps
 
 from locales import available_locales
@@ -29,11 +31,21 @@ from shared_vars import gm
 GETTEXT_DOMAIN = 'unobot'
 GETTEXT_DIR = 'locales'
 
+logger = logging.getLogger(__name__)
+
 
 class _Underscore(object):
     """Class to emulate flufl.i18n behaviour, but with plural support"""
     def __init__(self):
         self.translators = {}
+        
+        # Skip translation loading if explicitly disabled (for Heroku)
+        if os.getenv('ENABLE_TRANSLATIONS', 'false').lower() == 'false':
+            logger.info("Translations disabled - running in English only")
+            self.locale_stack = []
+            return
+        
+        # Try to load translations
         for locale in available_locales.keys():
             if locale == 'en_US':  # No translation file for en_US
                 continue
@@ -45,10 +57,14 @@ class _Underscore(object):
                     self.translators[locale] = gettext.GNUTranslations(
                         open(translation_file, 'rb')
                     )
-            except (OSError, IOError, TypeError):
+                    logger.debug(f"Loaded translation for {locale}")
+            except (OSError, IOError, TypeError) as e:
                 # Translation file not found or not readable, skip this locale
+                logger.warning(f"Could not load translation for {locale}: {e}")
                 pass
-        self.locale_stack = list()
+        
+        logger.info(f"Loaded {len(self.translators)} translations")
+        self.locale_stack = []
 
     def push(self, locale):
         self.locale_stack.append(locale)
