@@ -51,7 +51,8 @@ coverage.xml
 .hypothesis/
 
 # Translations
-*.mo
+# *.mo files are needed for Heroku deployment
+# *.mo
 # *.pot
 
 # Django stuff:
