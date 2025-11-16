@@ -1,0 +1,7 @@
+services:
+  maumaubot:
+    # build: .
+    image: ghcr.io/jh0ker/Uno_ForeverBot
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
