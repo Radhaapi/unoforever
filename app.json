@@ -1,0 +1,58 @@
+{
+  "name": "UNO Telegram Bot",
+  "description": "Play UNO card game on Telegram with friends",
+  "repository": "https://github.com/Radhaapi/unoforever",
+  "keywords": ["telegram", "bot", "uno", "game", "python"],
+  "env": {
+    "TOKEN": {
+      "description": "Your Telegram Bot Token from @BotFather",
+      "required": true
+    },
+    "ADMIN_LIST": {
+      "description": "Admin user IDs (space-separated)",
+      "value": "0",
+      "required": false
+    },
+    "WORKERS": {
+      "description": "Number of worker threads",
+      "value": "32",
+      "required": false
+    },
+    "OPEN_LOBBY": {
+      "description": "Allow anyone to join games",
+      "value": "true",
+      "required": false
+    },
+    "ENABLE_TRANSLATIONS": {
+      "description": "Enable multi-language support",
+      "value": "false",
+      "required": false
+    },
+    "DEFAULT_GAMEMODE": {
+      "description": "Default game mode (classic/fast/wild)",
+      "value": "fast",
+      "required": false
+    },
+    "WAITING_TIME": {
+      "description": "Seconds to wait for players to join",
+      "value": "120",
+      "required": false
+    },
+    "MIN_PLAYERS": {
+      "description": "Minimum players to start a game",
+      "value": "2",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
