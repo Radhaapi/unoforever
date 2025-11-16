@@ -36,13 +36,14 @@ class Game(object):
     starter = None
     mode = DEFAULT_GAMEMODE
     job = None
-    owner = ADMIN_LIST
     open = OPEN_LOBBY
     translate = ENABLE_TRANSLATIONS
 
     def __init__(self, chat):
         self.chat = chat
         self.last_card = None
+        # Initialize owner as a list copy of ADMIN_LIST for each game instance
+        self.owner = list(ADMIN_LIST) if ADMIN_LIST else []
 
         self.deck = Deck()
 
